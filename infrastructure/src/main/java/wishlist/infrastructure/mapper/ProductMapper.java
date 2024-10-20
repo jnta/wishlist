@@ -1,7 +1,7 @@
 package wishlist.infrastructure.mapper;
 
 import wishlist.domain.entity.Product;
-import wishlist.infrastructure.dto.ProductRequest;
+import wishlist.infrastructure.dto.ProductDTO;
 import wishlist.infrastructure.mongo.documents.ProductDocument;
 
 public class ProductMapper {
@@ -16,7 +16,11 @@ public class ProductMapper {
         return new Product(productDocument.getId(), productDocument.getName());
     }
 
-    public static Product toProduct(ProductRequest productRequest) {
-        return new Product(productRequest.id(), productRequest.name());
+    public static Product toProduct(ProductDTO productDTO) {
+        return new Product(productDTO.id(), productDTO.name());
+    }
+
+    public static ProductDTO toDTO(Product product) {
+        return new ProductDTO(product.id(), product.name());
     }
 }

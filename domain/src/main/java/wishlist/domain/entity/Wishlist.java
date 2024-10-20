@@ -2,13 +2,14 @@ package wishlist.domain.entity;
 
 import wishlist.domain.exception.ProductLimitExceededException;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Wishlist {
+    private final Set<Product> products = new HashSet<>();
     private String id;
     private String customerId;
-    private List<Product> products = new ArrayList<>();
 
     public Wishlist(String customerId) {
         this.customerId = customerId;
@@ -17,7 +18,7 @@ public class Wishlist {
     public Wishlist(String id, String customerId, List<Product> products) {
         this.id = id;
         this.customerId = customerId;
-        this.products = products;
+        this.products.addAll(products);
     }
 
     public void addProduct(Product product) {
@@ -31,10 +32,6 @@ public class Wishlist {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getCustomerId() {
         return customerId;
     }
@@ -43,11 +40,7 @@ public class Wishlist {
         this.customerId = customerId;
     }
 
-    public List<Product> getProducts() {
+    public Set<Product> getProducts() {
         return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
     }
 }

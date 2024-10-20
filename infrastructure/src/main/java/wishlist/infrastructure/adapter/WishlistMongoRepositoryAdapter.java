@@ -1,6 +1,7 @@
 package wishlist.infrastructure.adapter;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import wishlist.domain.entity.Wishlist;
 import wishlist.domain.repository.WishlistRepository;
 import wishlist.infrastructure.mapper.WishlistMapper;
@@ -17,6 +18,7 @@ public class WishlistMongoRepositoryAdapter implements WishlistRepository {
     }
 
     @Override
+    @Transactional
     public Wishlist save(Wishlist wishlist) {
         var wishlistDocument = repository.save(WishlistMapper.toWishlistDocument(wishlist));
         return WishlistMapper.toWishlist(wishlistDocument);
@@ -35,6 +37,7 @@ public class WishlistMongoRepositoryAdapter implements WishlistRepository {
     }
 
     @Override
+    @Transactional
     public void deleteProductFromCustomerWishlist(String productId, String customerId) {
         repository.deleteProductFromCustomerWishlist(productId, customerId);
     }

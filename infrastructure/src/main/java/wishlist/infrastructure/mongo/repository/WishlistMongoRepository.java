@@ -31,7 +31,7 @@ public class WishlistMongoRepository {
 
     public Optional<WishlistDocument> findByProductIdAndCustomerId(String productId, String customerId) {
         return Optional.ofNullable(mongoTemplate.findOne(
-                Query.query(Criteria.where(CUSTOMER_ID).is(customerId).and("products.productId").is(productId)),
+                Query.query(Criteria.where(CUSTOMER_ID).is(customerId).and("products.id").is(productId)),
                 WishlistDocument.class
         ));
     }
@@ -39,7 +39,7 @@ public class WishlistMongoRepository {
     public void deleteProductFromCustomerWishlist(String productId, String customerId) {
         mongoTemplate.updateFirst(
                 Query.query(Criteria.where(CUSTOMER_ID).is(customerId)),
-                new Update().pull("products", Query.query(Criteria.where("productId").is(productId))),
+                new Update().pull("products", Query.query(Criteria.where("id").is(productId))),
                 WishlistDocument.class
         );
     }

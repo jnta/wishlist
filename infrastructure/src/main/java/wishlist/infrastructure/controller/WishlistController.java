@@ -7,8 +7,12 @@ import wishlist.application.usecase.AddProductToCustomerWishlistUseCase;
 import wishlist.application.usecase.IsProductInCustomerWishlistUseCase;
 import wishlist.application.usecase.ListProductsFromCustomerWishlistUseCase;
 import wishlist.application.usecase.RemoveProductFromCustomerWishlistUseCase;
-import wishlist.infrastructure.dto.ProductRequest;
+import wishlist.infrastructure.dto.ProductDTO;
+import wishlist.infrastructure.dto.WishlistDTO;
 import wishlist.infrastructure.mapper.ProductMapper;
+import wishlist.infrastructure.mapper.WishlistMapper;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/wishlists")
@@ -29,9 +33,9 @@ public class WishlistController {
     }
 
     @PostMapping("/{customerId}/products")
-    public ResponseEntity<Void> addProductToWishlist(@PathVariable String customerId, @RequestBody ProductRequest productRequest) {
-        addProductToWishlistUseCase.execute(ProductMapper.toProduct(productRequest), customerId);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResponseEntity<WishlistDTO> addProductToWishlist(@PathVariable String customerId, @RequestBody ProductDTO productDTO) {
+        var wishlist = addProductToWishlistUseCase.execute(ProductMapper.toProduct(productDTO), customerId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(WishlistMapper.toDTO(wishlist));
     }
 
     @DeleteMapping("/{customerId}/products/{productId}")
@@ -48,8 +52,8 @@ public class WishlistController {
     }
 
     @GetMapping("/{customerId}/products")
-    public ResponseEntity<Void> listProductsFromWishlist(@PathVariable String customerId) {
-        listProductsFromWishlistUseCase.execute(customerId);
-        return ResponseEntity.status(HttpStatus.OK).build();
+    public ResponseEntity<List<ProductDTO>> listProductsFromWishlist(@PathVariable String customerId) {
+        var products = listProductsFromWishlistUseCase.execute(customerId);
+        return ResponseEntity.status(HttpStatus.OK).body(products.stream().map(ProductMapper::toDTO).toList());
     }
 }
