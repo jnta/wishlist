@@ -1,7 +1,8 @@
 spring:
   data:
     mongodb:
-      host: localhost
+      auto-index-creation: true
+      host: ${HOST:localhost}
       port: 27017
       username: dev
       password: dev

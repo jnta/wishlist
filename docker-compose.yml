@@ -1,10 +1,18 @@
 services:
-  mongo:
-    image: mongo:latest
-    container_name: mongo
+  mongodb:
+    image: mongo:8.0.1
+    container_name: mongodb
     ports:
       - "27017:27017"
     environment:
       MONGO_INITDB_ROOT_USERNAME: dev
       MONGO_INITDB_ROOT_PASSWORD: dev
-      MONGO_INITDB_DATABASE: wishlist_db
+  wishlist:
+    build: .
+    container_name: wishlist
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongodb
+    environment:
+      HOST: mongodb
