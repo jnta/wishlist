@@ -1,4 +1,4 @@
-package br.com.jonataalbuquerque.exception;
+package wishlist.domain.exception;
 
 public class ProductLimitExceededException extends RuntimeException {
     public ProductLimitExceededException(String message) {

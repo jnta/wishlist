@@ -1,6 +1,6 @@
-package br.com.jonataalbuquerque.entities;
+package wishlist.domain.entity;
 
-import br.com.jonataalbuquerque.exception.ProductLimitExceededException;
+import wishlist.domain.exception.ProductLimitExceededException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,15 @@ public class Wishlist {
     private String customerId;
     private List<Product> products = new ArrayList<>();
 
+    public Wishlist(String customerId) {
+        this.customerId = customerId;
+    }
+
+    public Wishlist(String id, String customerId, List<Product> products) {
+        this.id = id;
+        this.customerId = customerId;
+        this.products = products;
+    }
 
     public void addProduct(Product product) {
         if (products.size() >= 20) {
