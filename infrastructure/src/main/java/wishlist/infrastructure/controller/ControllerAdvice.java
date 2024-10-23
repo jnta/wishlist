@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import wishlist.domain.exception.ProductLimitExceededException;
 import wishlist.domain.exception.WishlistNotFoundException;
 import wishlist.infrastructure.dto.ErrorMessageDTO;
 
@@ -14,5 +15,11 @@ public class ControllerAdvice {
     public ResponseEntity<ErrorMessageDTO> notFound(WishlistNotFoundException wishlistNotFoundException) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(new ErrorMessageDTO(wishlistNotFoundException.getMessage()));
+    }
+
+    @ExceptionHandler(ProductLimitExceededException.class)
+    public ResponseEntity<ErrorMessageDTO> productLimitExceeded(ProductLimitExceededException productLimitExceededException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorMessageDTO(productLimitExceededException.getMessage()));
     }
 }
