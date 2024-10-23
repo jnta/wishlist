@@ -8,14 +8,20 @@ public class WishlistMapper {
     private WishlistMapper() {
     }
 
-    public static WishlistDocument toWishlistDocument(Wishlist wishlist) {
+    public static WishlistDocument toDocument(Wishlist wishlist) {
         return new WishlistDocument(wishlist.getId(), wishlist.getCustomerId(), wishlist.getProducts().stream()
                 .map(ProductMapper::toProductDocument)
                 .toList());
     }
 
-    public static Wishlist toWishlist(WishlistDocument wishlistDocument) {
+    public static Wishlist toDomain(WishlistDocument wishlistDocument) {
         return new Wishlist(wishlistDocument.getId(), wishlistDocument.getCustomerId(), wishlistDocument.getProducts().stream()
+                .map(ProductMapper::toProduct)
+                .toList());
+    }
+
+    public static Wishlist toDomain(WishlistDTO wishlistDTO) {
+        return new Wishlist(wishlistDTO.id(), wishlistDTO.customerId(), wishlistDTO.products().stream()
                 .map(ProductMapper::toProduct)
                 .toList());
     }

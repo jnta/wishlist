@@ -20,20 +20,20 @@ public class WishlistMongoRepositoryAdapter implements WishlistRepository {
     @Override
     @Transactional
     public Wishlist save(Wishlist wishlist) {
-        var wishlistDocument = repository.save(WishlistMapper.toWishlistDocument(wishlist));
-        return WishlistMapper.toWishlist(wishlistDocument);
+        var wishlistDocument = repository.save(WishlistMapper.toDocument(wishlist));
+        return WishlistMapper.toDomain(wishlistDocument);
     }
 
     @Override
     public Optional<Wishlist> findByCustomerId(String customerId) {
         return repository.findByCustomerId(customerId)
-                .map(WishlistMapper::toWishlist);
+                .map(WishlistMapper::toDomain);
     }
 
     @Override
     public Optional<Wishlist> findByProductIdAndCustomerId(String productId, String customerId) {
         return repository.findByProductIdAndCustomerId(productId, customerId)
-                .map(WishlistMapper::toWishlist);
+                .map(WishlistMapper::toDomain);
     }
 
     @Override
